@@ -35,19 +35,68 @@ class ViewController: UIViewController {
         return textView
     }()
     
+    private let previousButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("PREV", for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.titleLabel?.font = .boldSystemFont(ofSize: 15)
+        button.setTitleColor(.gray, for: .normal)
+        
+        return button
+    }()
+    
+    private let nextButton: UIButton = {
+        let button = UIButton(type: .system)
+        let pinkColor = UIColor(red: 232/255, green: 68/255, blue: 133/255, alpha: 1)
+        button.setTitle("NEXT", for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.titleLabel?.font = .boldSystemFont(ofSize: 15)
+        button.setTitleColor(pinkColor, for: .normal)
+        
+        return button
+    }()
+    
+    private let pageControl: UIPageControl = {
+        let pc = UIPageControl()
+        pc.currentPage = 0
+        pc.currentPageIndicatorTintColor = .red
+        pc.numberOfPages = 4
+        pc.pageIndicatorTintColor = .gray
+        
+        return pc
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.addSubview(descriptionTextView)
         
+        setupBottomControls()
+        
         setupLayout()
     }
     
+    fileprivate func setupBottomControls() {
+        let bottomControlsStackView = UIStackView(arrangedSubviews: [previousButton, pageControl, nextButton])
+        bottomControlsStackView.translatesAutoresizingMaskIntoConstraints = false
+        bottomControlsStackView.distribution = .fillEqually
+        
+        view.addSubview(bottomControlsStackView)
+        
+        NSLayoutConstraint.activate([
+            bottomControlsStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            bottomControlsStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            bottomControlsStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            bottomControlsStackView  .heightAnchor.constraint(equalToConstant: 50)
+        ])
+    }
+    
+    
     func setupLayout() {
         let topImageContainerView = UIView()
-        topImageContainerView.backgroundColor = .blue
+        //        topImageContainerView.backgroundColor = .blue
         view.addSubview(topImageContainerView)
-//        topImageContainerView.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+        //        topImageContainerView.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
         topImageContainerView.translatesAutoresizingMaskIntoConstraints = false
         
         topImageContainerView.addSubview(bearImageView)
@@ -61,10 +110,10 @@ class ViewController: UIViewController {
             bearImageView.centerXAnchor.constraint(equalTo: topImageContainerView.centerXAnchor),
             bearImageView.centerYAnchor.constraint(equalTo: topImageContainerView.centerYAnchor),
             bearImageView.heightAnchor.constraint(equalTo: topImageContainerView.heightAnchor, multiplier: 0.5),
-//            bearImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-//            bearImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100),
-//            bearImageView.widthAnchor.constraint(equalToConstant: 200),
-//            bearImageView.heightAnchor.constraint(equalToConstant: 200),
+            //            bearImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            //            bearImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100),
+            //            bearImageView.widthAnchor.constraint(equalToConstant: 200),
+            //            bearImageView.heightAnchor.constraint(equalToConstant: 200),
             
             descriptionTextView.topAnchor.constraint(equalTo: topImageContainerView.bottomAnchor),
             descriptionTextView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 25),
