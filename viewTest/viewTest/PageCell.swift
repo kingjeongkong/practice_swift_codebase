@@ -21,7 +21,7 @@ class PageCell: UICollectionViewCell {
                                                      attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15),
                                                                   NSAttributedString.Key.foregroundColor : UIColor.gray]))
             
-            descriptionTextView.attributedText = attributedText 
+            descriptionTextView.attributedText = attributedText
             descriptionTextView.textAlignment = .center
         }
     }
