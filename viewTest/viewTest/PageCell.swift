@@ -9,7 +9,24 @@ import UIKit
 
 class PageCell: UICollectionViewCell {
     
-    let bearImageView: UIImageView = {
+    var page: Page? {
+        didSet{
+//            print(page?.imageName)
+            bearImageView.image = UIImage(named: page?.imageName ?? "")
+            
+            let attributedText = NSMutableAttributedString(string: page?.headerText ?? "",
+                                                           attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 20)])
+            
+            attributedText.append(NSAttributedString(string: "\n\n\n\(page?.bodyText ?? "")",
+                                                     attributes: [NSAttributedString.Key.font : UIFont.systemFont(ofSize: 15),
+                                                                  NSAttributedString.Key.foregroundColor : UIColor.gray]))
+            
+            descriptionTextView.attributedText = attributedText 
+            descriptionTextView.textAlignment = .center
+        }
+    }
+    
+    private let bearImageView: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: "paw-prints"))
         imageView.contentMode = .scaleAspectFit
         
@@ -18,7 +35,7 @@ class PageCell: UICollectionViewCell {
         return imageView
     }()
     
-    let descriptionTextView: UITextView = {
+    private let descriptionTextView: UITextView = {
         let textView = UITextView()
         
         let attributedText = NSMutableAttributedString(string: "Join us today in our fun and games!", attributes: [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 20)])

@@ -9,6 +9,14 @@ import UIKit
 
 class SwipingController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
+    let pages = [
+        Page(imageName: "paw-prints", headerText: "Join us today in our fun and games!", bodyText: "1"),
+        Page(imageName: "heart", headerText: "Subscribe and get coupons on our daily events", bodyText: "2"),
+        Page(imageName: "leaf", headerText: "VIP members special service", bodyText: "3")
+    ]
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -23,12 +31,14 @@ class SwipingController: UICollectionViewController, UICollectionViewDelegateFlo
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
+        return pages.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellID", for: indexPath)
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellID", for: indexPath) as? PageCell else { return UICollectionViewCell() }
 //        cell.backgroundColor = indexPath.item % 2 == 0 ? .red : .blue
+        let page = pages[indexPath.item]
+        cell.page = page
         
         return cell
     }
