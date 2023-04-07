@@ -14,6 +14,9 @@ class SwipingController: UICollectionViewController, UICollectionViewDelegateFlo
     let pages = [
         Page(imageName: "paw-prints", headerText: "Join us today in our fun and games!", bodyText: "1"),
         Page(imageName: "heart", headerText: "Subscribe and get coupons on our daily events", bodyText: "2"),
+        Page(imageName: "leaf", headerText: "VIP members special service", bodyText: "3"),
+        Page(imageName: "paw-prints", headerText: "Join us today in our fun and games!", bodyText: "1"),
+        Page(imageName: "heart", headerText: "Subscribe and get coupons on our daily events", bodyText: "2"),
         Page(imageName: "leaf", headerText: "VIP members special service", bodyText: "3")
     ]
     
@@ -33,6 +36,7 @@ class SwipingController: UICollectionViewController, UICollectionViewDelegateFlo
             numOfPage -= 1
             let indexPath = IndexPath(item: numOfPage, section: 0)
             collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+            pageControl.currentPage = numOfPage
         }
     }
     
@@ -53,14 +57,15 @@ class SwipingController: UICollectionViewController, UICollectionViewDelegateFlo
             numOfPage += 1
             let indexPath = IndexPath(item: numOfPage, section: 0)
             collectionView?.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+            pageControl.currentPage = numOfPage
         }
     }
     
-    private let pageControl: UIPageControl = {
+    private lazy var pageControl: UIPageControl = {
         let pc = UIPageControl()
         pc.currentPage = 0
+        pc.numberOfPages = pages.count
         pc.currentPageIndicatorTintColor = .red
-        pc.numberOfPages = 3
         pc.pageIndicatorTintColor = .gray
         
         return pc
