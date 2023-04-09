@@ -71,6 +71,23 @@ class SwipingController: UICollectionViewController, UICollectionViewDelegateFlo
         return pc
     }()
     
+    override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        let x = targetContentOffset.pointee.x
+        
+        pageControl.currentPage = Int(x / view.frame.width)
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        coordinator.animate { _ in
+            self.collectionViewLayout.invalidateLayout()
+            
+            let indexPath = IndexPath(item: self.pageControl.currentPage, section: 0)
+            self.collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+        } completion: { _ in
+            
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
